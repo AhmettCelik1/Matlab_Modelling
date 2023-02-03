@@ -1,5 +1,5 @@
 function [sys,x0,str,ts,simStateCompliance] = mav_dynamics(t,x,u,flag,MAV)
-
+%function [sys,x0,str,ts,simStateCompliance] = mav_dynamics(t,x,u,flag,MAV)
 switch flag
 
   %%%%%%%%%%%%%%%%%%
@@ -120,8 +120,7 @@ simStateCompliance = 'UnknownSimState';
 %=============================================================================
 %
 function sys=mdlDerivatives(t,x,uu, MAV)
-    MAV.Count =  MAV.Count + 1;
-    %fprintf('The following ID does not have an assigned stress value: %d\n',MAV.Count)
+
     pn    = x(1);
     pe    = x(2);
     pd    = x(3);
@@ -141,62 +140,24 @@ function sys=mdlDerivatives(t,x,uu, MAV)
     ell   = uu(4);
     m     = uu(5);
     n     = uu(6);
-    %disp(x,uu)
-    fprintf('pn value: %d\n',pn)
-    fprintf('fx value: %d\n',fx)
-    %fprintf('pe value: %d\n',pe)
-    %fprintf('pd value: %d\n',pd)
-    %fprintf('u value: %d\n',u)
-    %fprintf('v value: %d\n',v)
-    %fprintf('w value: %d\n',w)
-
-
+    
     pndot = (e1*e1 + e0*e0- e2*e2- e3*e3)*u + 2*v*(e1*e2 - e3*e0) + 2*w*(e1*e3 + e2*e0);
-    %fprintf('pndot value: %d\n',pndot)
-
     pedot = 2*u*(e1*e2 + e3*e0) + v*(e2*e2 + e0*e0 - e1*e1 - e3*e3) + 2*w*(e2*e3 - e1*e0);
-    %fprintf('pedot value: %d\n',pedot)
     pddot = 2*u*(e1*e3 - e2*e0) + 2*v*(e2*e3 + e1*e0) + w*(e3*e3 + e0*e0 - e1*e1 - e2*e2); 
-    %fprintf('pddot value: %d\n',pddot)
-    udot = r*v - q*w + fx/(m+0.0000001);
-    fprintf('m value: %d\n',m)
-    %fprintf("r*v: %d\n",r*v)
-    %fprintf("q*w: %d\n",q*w)
-
-    %fprintf("fx/m: %d\n",fx/m)
+    udot = r*v - q*w + fx/(m+0.0000001);  
     vdot = p*w - r*u + fy/(m+0.0000001);
-    %fprintf('vdot value: %d\n',vdot)
     wdot = q*u - p*v + fz/(m+0.0000001);
-    %fprintf('wdot value: %d\n',wdot)
-    %wdot = 0;
-    %fprintf('wdot value: %d\n',wdot)
-    %udot = 0;
-    %fprintf('udot value: %d\n',udot)
-    %vdot = 0;
-    %fprintf('vdot value: %d\n',vdot)
     e0dot = (-p*e1 -q*e2 -r*e3)/2;
-    %fprintf('e0dot value: %d\n',e0dot)
     e1dot = (p*e0 + r*e2 -q*3)/2;
-    %fprintf('e1dot value: %d\n',e1dot)
     e2dot = (q*e0 -r*e1 +p*e3)/2;
-    %fprintf('e2dot value: %d\n',e2dot)
     e3dot = (r*e0 +q*e1 -p*e2)/2;
-    %fprintf('e3dot value: %d\n',e3dot)
     pdot = MAV.Gamma1*p*q - MAV.Gamma2*q*r + MAV.Gamma3*ell + MAV.Gamma4*n;
-    %fprintf('pdot value: %d\n',pdot)
     qdot = MAV.Gamma5*p*r - MAV.Gamma6*(p*p-r*r) + m*(1/MAV.Jy);
-    %fprintf('qdot value: %d\n',qdot)
     rdot = MAV.Gamma7*p*q - MAV.Gamma1*q*r + MAV.Gamma4*ell + MAV.Gamma8*n;
-    %fprintf('rdot value: %d\n',rdot)
 
-    %pn, pn_hat, pn_c
-    %fprintf('pn: %d\n',uu(1))
-    %fprintf('pn_hat: %d\n',uu(31))
-    %fprintf('pn_c: %d\n',uu(19))
 sys = [pndot; pedot; pddot; udot; vdot; wdot; e0dot; e1dot; e2dot; e3dot; pdot; qdot; rdot];
 sys(isnan(sys))=0;
-disp(sys)
-%disp(sys)
+
 % end mdlDerivatives
 
 %
@@ -208,7 +169,7 @@ disp(sys)
 %
 function sys=mdlUpdate(t,x,u)
 
-sys = [];
+sys = [ ];
 
 % end mdlUpdate
 
@@ -219,8 +180,19 @@ sys = [];
 %=============================================================================
 %
 function sys=mdlOutputs(t,x)
-    y = [...
-        ];
+    y = [x(1),
+    x(2),
+    x(3),
+    x(4),
+    x(5),
+    x(6),
+    x(7),
+    x(8),
+    x(9),
+    x(10),
+    x(11),
+    x(12),
+  ];
 sys = y;
 
 % end mdlOutputs
