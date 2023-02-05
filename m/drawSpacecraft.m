@@ -33,7 +33,7 @@ function drawSpacecraft(uu)
         ylabel('North')
         zlabel('-Down')
         view(32,47)  % set the vieew angle for figure
-        axis([-10,10,-10,10,-10,10]);
+        %axis([-10,10,-10,10,-10,10]);
         hold on
         
     % at every other time step, redraw base and rod
@@ -107,7 +107,7 @@ function [V,F,colors] = defineSpacecraftBody()
     V = [...
         1    1    0;... % point 1
         1   -1    0;... % point 2
-        -5   -1    -1;... % point 3
+        -1   -1    0;... % point 3
         -1    1    0;... % point 4
         1    1   -2;... % point 5
         1   -1   -2;... % point 6
@@ -117,7 +117,7 @@ function [V,F,colors] = defineSpacecraftBody()
         1.5 -1.5  0;... % point 10
         -1.5 -1.5  0;... % point 11
         -1.5  1.5  0;... % point 12
-        2    0    -1;... % point 13
+         2    0    -1;... % point 13
         0 -8 10;...%point14
         -5 1 -1;... %point15
         -7 0 -1;...%point 16
@@ -134,7 +134,7 @@ function [V,F,colors] = defineSpacecraftBody()
         -7, 0, -4;...%point25
          -7 0 -1;...%point 26
          -5,0, -1;...%point 27
-    ];
+    ]*10;
 
     % define faces as a list of vertices numbered above
     F = [...
