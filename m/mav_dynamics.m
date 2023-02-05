@@ -180,19 +180,27 @@ sys = [ ];
 %=============================================================================
 %
 function sys=mdlOutputs(t,x)
+   
+    quaternion= [x(7) x(8) x(9) x(10) ]
+    eulXYZ = quat2eul(quaternion,'XYZ')
+    phi = eulXYZ(1)
+    theta = eulXYZ(2)
+    psi = eulXYZ(3)
+
     y = [x(1),
     x(2),
     x(3),
     x(4),
     x(5),
     x(6),
-    x(7),
-    x(8),
-    x(9),
-    x(10),
+    phi,%phi
+    theta,%theta
+    psi,%psi
     x(11),
     x(12),
+    x(13),
   ];
+%phi theta psi    
 sys = y;
 
 % end mdlOutputs
